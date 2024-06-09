@@ -3,4 +3,5 @@ from networking.views import LoginView, RegisterView, UserSearchAPIView,send_fri
 
 urlpatterns = [
     path('register/', RegisterView.as_view()),
+    path('login/', LoginView.as_view()),
 ]

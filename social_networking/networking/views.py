@@ -29,3 +29,25 @@ class RegisterView(APIView):
             serializer.save()
             return Response({"message": "User created successfully","data": serializer.data}, status=status.HTTP_201_CREATED)    
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+# View for user login
+class LoginView(APIView):
+    permission_classes = [permissions.AllowAny]  # No authentication required
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data)
+        if serializer.is_valid():
+            email = serializer.validated_data['email']
+            password = serializer.validated_data['password']
+            user = authenticate(request=request, email=email, password=password)
+            if user: 
+                refresh = RefreshToken.for_user(user)  # Generate JWT tokens
+                return Response({
+                    "message": "User logged in successfully",
+                    'access': str(refresh.access_token),  # Access token issued by authentication server upon login
+                    #'refresh': str(refresh)
+                }, status=status.HTTP_200_OK)
+            else:
+                return Response({"message": "Invalid login credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
