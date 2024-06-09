@@ -51,3 +51,26 @@ class LoginView(APIView):
             else:
                 return Response({"message": "Invalid login credentials"}, status=status.HTTP_401_UNAUTHORIZED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+# View for searching users
+class UserSearchAPIView(generics.ListAPIView):
+    serializer_class = CustomUserSerializer
+    authentication_classes = [JWTAuthentication]   # Use JWT for authentication
+    permission_classes = [permissions.IsAuthenticated]   # Only authenticated users can access
+    pagination_class = PageNumberPagination  # Enable pagination
+
+    def get_queryset(self):
+        query = self.request.query_params.get('query', '')
+        return User.objects.filter(
+            Q(email__iexact=query) | Q(name__icontains=query)   # Search by email or name-starting -with query
+        ).distinct()
+
+    def paginate_queryset(self, queryset):
+        page_size = 10   # Set page size
+        paginator = self.paginator
+        paginator.page_size = page_size
+        return paginator.paginate_queryset(queryset, self.request, view=self)
+    
+
