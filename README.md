@@ -23,7 +23,6 @@ cd Social-Networking-API
 ```
 
 ### Step 2: Create and configure .env file
-Create a .env file in the root directory. Add the following variables to the .env file:
 ```
 touch .env
 echo "POSTGRES_DB=networking" >> .env
@@ -31,33 +30,38 @@ echo "POSTGRES_USER=dev101"  >> .env
 echo "POSTGRES_PASSWORD=hello\!world" >> .env
 ```
 
-### Step 3: Build and run the containers
+### Step 3: Install Docker 
 ```bash
-docker-compose up -d --build
+sudo snap install docker
 ```
 
-### Step 4: Migrate Database
+### Step 4: Build and run the containers
+```bash
+sudo docker-compose up -d --build
+```
+
+### Step 5: Migrate Database
 To migrate the new PostgreSQL database running in Docker execute the following command:
 ```bash
-docker-compose exec web python manage.py migrate
+sudo docker-compose exec web python3 manage.py migrate
 ```
 
-### Step 5: Create superuser 
+### Step 6: Create superuser 
 Create a superuser to access the Django admin:
 ```bash
-docker-compose exec web python manage.py createsuperuser
+sudo docker-compose exec web python3 manage.py createsuperuser
 ```
 Follow the prompts to set up the superuser account.
 
-### Step 5: Access the API
-Now you can access the application at `https://127.0.0.1:8080`
+### Step 7: Access the API
+Now you can access the application. For example, try accessing api end point to register user which is at `https://localhost:8080/api/register`
 
 Use `Run in Postman` button at the top of this Readme file to test APIs using Postman collection.
 
-### Step 6: Close Container
+### Step 8: Close Container
 When you're done, close down your Docker container:
 ```bash
-docker-compose down
+sudo docker-compose down
 ```
 
 
@@ -73,7 +77,7 @@ Follow these steps to set up the project locally:
 ### Step 1: Clone the Repository
 ```bash
 git clone https://github.com/paras-gill/Social-Networking-API.git
-cd social_networking_api
+cd Social-Networking-API
 ```
 
 ### Step 2: Setup a Virtual Environment
@@ -90,11 +94,11 @@ pip install -r requirements.txt
 ```
 
 ### Step 4: Create and configure .env file
-Create a .env file in the root directory. Add the following variables to the .env file:
-```bash
-POSTGRES_DB=networking
-POSTGRES_USER=dev101
-POSTGRES_PASSWORD=hello!world
+```
+touch .env
+echo "POSTGRES_DB=networking" >> .env
+echo "POSTGRES_USER=dev101"  >> .env
+echo "POSTGRES_PASSWORD=hello\!world" >> .env
 ```
 
 ### Step 5: Configure the Database
@@ -152,10 +156,9 @@ python manage.py runserver
 ```
 
 ### Step 9: Access the API
-The API will be available at http://127.0.0.1:8000.
+Now you can access the application. For example, try accessing api end point to register user which is at `https://localhost:8080/api/register`
 
 Use `Run in Postman` button at the top of this Readme file to test APIs using Postman collection.
-
 
 ## Endpoints
 
@@ -164,8 +167,11 @@ Use `Run in Postman` button at the top of this Readme file to test APIs using Po
 - `GET /users/search/`: Search users by email or name (requires authentication)
 - `POST /friend-request/send/<receiver_id>/`: Send a friend request (requires authentication)
 - `GET /friend-requests/pending/`: List pending friend requests (requires authentication)
-- `PATCH /friend-request/respond/<request_id>/<action>/`: Respond to a friend request (requires authentication)
 - `GET /friends/`: List friends (requires authentication)
+- `PATCH /friend-request/respond/<request_id>/<action>/`: Respond to a friend request (requires authentication).
+
+  Here `action=1` means friend request accepted and `action=0` means friend request rejected.
+
 
 ## Authentication Scheme
 
