@@ -19,15 +19,16 @@ This project is a social networking API built using Django Rest Framework (DRF).
 ### Step 1: Clone the Repository
 ```bash
 git clone https://github.com/paras-gill/Social-Networking-API.git
-cd social_networking_api
+cd Social-Networking-API
 ```
 
 ### Step 2: Create and configure .env file
 Create a .env file in the root directory. Add the following variables to the .env file:
 ```
-POSTGRES_DB=networking
-POSTGRES_USER=dev101
-POSTGRES_PASSWORD=hello!world
+touch .env
+echo "POSTGRES_DB=networking" >> .env
+echo "POSTGRES_USER=dev101"  >> .env
+echo "POSTGRES_PASSWORD=hello\!world" >> .env
 ```
 
 ### Step 3: Build and run the containers
