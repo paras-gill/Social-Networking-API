@@ -11,105 +11,150 @@ This project is a social networking API built using Django Rest Framework (DRF).
 - Send, accept, and reject friend requests
 - List friends and pending friend requests
 
-## Installation
+## Installation (For Docker Users)
+
+### Prerequisites
+- Python 3.8+
+
+### Step 1: Clone the Repository
+```bash
+git clone https://github.com/paras-gill/social_networking_api.git
+cd social_networking_api
+```
+
+### Step 2: Create and configure .env file
+Create a .env file in the root directory. Add the following variables to the .env file:
+```
+POSTGRES_DB=networking
+POSTGRES_USER=dev101
+POSTGRES_PASSWORD=hello!world
+```
+
+### Step 3: Build and run the containers
+```bash
+docker-compose up -d --build
+```
+
+### Step 4: Migrate Database
+To migrate the new PostgreSQL database running in Docker execute the following command:
+```bash
+docker-compose exec web python manage.py migrate
+```
+
+### Step 5: Create superuser 
+Create a superuser to access the Django admin:
+```bash
+docker-compose exec web python manage.py createsuperuser
+```
+Follow the prompts to set up the superuser account.
+
+### Step 5: Access the API
+Now you can access the application at `https://127.0.0.1:8080`
+
+Use `Run in Postman` button at the top of this Readme file to test APIs using Postman collection.
+
+### Step 6: Close Container
+When you're done, close down your Docker container:
+```bash
+docker-compose down
+```
+
+
+## Installation (For Non-Docker Users)
 
 Follow these steps to set up the project locally:
 
 ### Prerequisites
-
 - Python 3.8+
 - PostgreSQL
 - pip (Python package installer)
 
 ### Step 1: Clone the Repository
-
 ```bash
 git clone https://github.com/paras-gill/social_networking_api.git
 cd social_networking_api
 ```
 
 ### Step 2: Setup a Virtual Environment
-
 Create and activate a virtual environment:
-
 ```bash
 python3 -m venv venv
 source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
 ```
 
 ### Step 3: Install Dependencies
-
 Install the required Python packages:
-
 ```bash
 pip install -r requirements.txt
 ```
 
-### Step 4: Configure the Database
+### Step 4: Create and configure .env file
+Create a .env file in the root directory. Add the following variables to the .env file:
+```bash
+POSTGRES_DB=networking
+POSTGRES_USER=dev101
+POSTGRES_PASSWORD=hello!world
+```
 
+### Step 5: Configure the Database
 Ensure that PostgreSQL is installed on your system. For Linux users, use the following commands:
-
 ```bash
 sudo apt-get install postgresql postgresql-contrib
 sudo apt-get install libpq-dev python3-dev
 ```
 
 Install psycopg2, a PostgreSQL adapter for Django, using the following command:
-
 ```bash
 pip install psycopg2
 ```
 
-Create a PostgreSQL database. For example, using `psql`:
+Start PostgreSQL server:
+```bash
+sudo service postgresql start
+```
 
+By default, PostgreSQL is configured to use the postgres user. Switch to this user:
+```bash
+sudo -i -u postgres
+```
+Access the PostgreSQL Shell:
+```bash
+psql
+```
+
+Create a database named `networking` which this application is configured to use:
 ```bash
 CREATE DATABASE networking;
 CREATE USER dev101 WITH PASSWORD 'hello!world';
 GRANT ALL PRIVILEGES ON DATABASE networking TO dev101;
 ```
 
-Update the DATABASES configuration in social_networking/settings.py
-```bash
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'networking',  # Your database name
-        'USER': 'dev101',  # Your database user
-        'PASSWORD': 'hello!world',  # Your database password
-        'HOST': 'localhost',  # Host (usually 'localhost')
-        'PORT': '',  # Port (leave empty for default)
-    }
-}
 
-```
-
-### Step 5: Apply Migrations
-
+### Step 6: Apply Migrations
 Apply the database migrations to create the necessary tables:
-
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-### Step 6: Create a Superuser
+### Step 7: Create a Superuser 
 Create a superuser to access the Django admin:
-
 ```bash
 python manage.py createsuperuser
 ```
-
 Follow the prompts to set up the superuser account.
 
-### Step 7: Run the Development Server
-
+### Step 8: Run the Development Server
 Start the Django development server:
-
 ```bash
 python manage.py runserver
 ```
 
+### Step 9: Access the API
 The API will be available at http://127.0.0.1:8000.
+
+Use `Run in Postman` button at the top of this Readme file to test APIs using Postman collection.
+
 
 ## Endpoints
 
