@@ -18,7 +18,7 @@ This project is a social networking API built using Django Rest Framework (DRF).
 
 ### Step 1: Clone the Repository
 ```bash
-git clone https://github.com/paras-gill/social_networking_api.git
+git clone https://github.com/paras-gill/Social-Networking-API.git
 cd social_networking_api
 ```
 
@@ -71,7 +71,7 @@ Follow these steps to set up the project locally:
 
 ### Step 1: Clone the Repository
 ```bash
-git clone https://github.com/paras-gill/social_networking_api.git
+git clone https://github.com/paras-gill/Social-Networking-API.git
 cd social_networking_api
 ```
 
